@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 
 services:
   redis:
@@ -89,9 +89,8 @@ services:
   nginx:
     image: gjovanov/nginx:latest
     ports:
-      - "${IP1}:80:80"
-      - "${IP1}:443:443/tcp"
-      - "${IP1}:443:443/udp"
+      - 80:80
+      - 443:443
     depends_on:
       - roomler
       - coturn
@@ -101,22 +100,11 @@ services:
       - ./.nginx/conf.d/:/etc/nginx/conf.d/
       - ./.nginx/cert/:/etc/nginx/cert/
       - ./.nginx/logs/:/etc/nginx/logs/
-
-    nginx2:
-      image: gjovanov/nginx:latest
-      ports:
-        - "${IP2}:80:80"
-        - "${IP2}:443:443/tcp"
-        - "${IP2}:443:443/udp"
-      depends_on:
-        - roomler
-        - coturn
-        - janus
-      volumes:
-        - ./.nginx/coturn/nginx.conf:/etc/nginx/nginx.conf
-        - ./.nginx/cert/:/etc/nginx/cert/
-        - ./.nginx/logs/:/etc/nginx/logs/
-     
+    networks:
+      - frontend
 volumes:
   uploads:
   mongo_data:
+networks:
+  frontend:
+  backend:
