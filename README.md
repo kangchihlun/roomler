@@ -428,3 +428,11 @@ $ npm run start:test-e2e
 $ npm run test:e2e
 
 ```
+## Kang modified
+如果沒加入 --add-host 會導致image建置不過
+
+先到console查詢 nslookup registry.npmjs.org 得到 ip 為104.16.26.35
+
+然後在 build.sh 加入 --add-host registry.npmjs.org:104.16.26.35
+
+再下release.sh
